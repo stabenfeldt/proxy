@@ -5,7 +5,6 @@ require "pp"
 
 
 @orders_url      = "https://esi.evetech.net/latest/markets/10000002/orders/?datasource=tranquility&order_type=all&page=1"
-@universe_url    = "https://esi.evetech.net/latest/universe/names/?datasource=tranquility"
 @lookup_name_url = "https://esi.evetech.net/latest/universe/names/?datasource=tranquility"
 
 
@@ -27,16 +26,14 @@ end
 
 # Returns product name.
 def get_names(type_ids)
-  puts "get_names got ids: #{type_ids[0..2]}"
   # Limit the set to 10 
   type_ids = type_ids.shift(10)
 
-  base_uri = "https://esi.evetech.net/latest/universe/names/?datasource=tranquility"
   options = { 
     :body =>  type_ids.to_s
   }
   
-  results = HTTParty.post(base_uri, options)
+  results = HTTParty.post(@lookup_name_url, options)
   extract_key(results, "name")
 end
 
@@ -48,9 +45,7 @@ orders = get_orders
 
 # Extract the type_ids from the result
 type_ids = extract_key(orders, "type_id")
-puts type_ids.to_s
 
 # Fetch and print names for the type_ids
-# type_ids = "[ 95465499, 30000142]"
 puts get_names(type_ids)
 
