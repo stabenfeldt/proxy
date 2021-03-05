@@ -6,7 +6,7 @@ jobs:
      - checkout
 
      # build the image
-     - run: docker build --no-cache -t rubytest .
+     - run: docker build --no-cache -t proxy .
 
      # run the image
-     - run: docker run -t rubytest 
+     - run: docker run -t proxy 
