@@ -1,5 +1,5 @@
 # Proxy test
-[![<Proxy>](https://circleci.com/gh/stabenfeldt/proxy.svg?style=svg)](<LINK>)
+[![<Proxy>](https://circleci.com/gh/stabenfeldt/proxy.svg?style=svg)](<https://app.circleci.com/pipelines/github/stabenfeldt/proxy>)
 
 
 **Prerequisits**: Install Docker locally.
