@@ -1,5 +1,5 @@
 FROM ruby:2.5.3-slim-stretch
-LABEL maintainer="Martin Stabenfeldt <martin@stabenfeld.net>"
+LABEL maintainer="Martin Stabenfeldt <martin@stabenfeldt.net>"
 
 ENV INSTALL_PATH /app
 WORKDIR $INSTALL_PATH
