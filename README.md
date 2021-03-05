@@ -1,4 +1,6 @@
 # Proxy test
+[![<Proxy>](https://circleci.com/gh/stabenfeldt/proxy.svg?style=svg)](<LINK>)
+
 
 **Prerequisits**: Install Docker locally.
 
