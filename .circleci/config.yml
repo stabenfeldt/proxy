@@ -1,3 +1,5 @@
+          command: apk add --no-cache  make
+
 version: 2
 jobs:
  build:
@@ -5,9 +7,8 @@ jobs:
    steps:
      - checkout
 
-     # install dependencies
-     - run: apk add --no-cache make
+     # build the image
+     - run: docker build --no-cache -t rubytest .
 
-     # build and run the application image
-     - run: make test
-
+     # run the image
+	   - run docker run -t rubytest 
