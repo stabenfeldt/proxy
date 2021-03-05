@@ -1,0 +1,12 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+
+     # build the image
+     - run: docker build --no-cache -t rubytest .
+
+     # run the image
+     - run: docker run -t rubytest 
