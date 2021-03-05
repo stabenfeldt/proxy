@@ -8,8 +8,6 @@ RUN gem install httparty
 RUN gem install pp
 
 COPY . $INSTALL_PATH
-
 WORKDIR $INSTALL_PATH
-
 
 CMD ["ruby", "get.rb"]
