@@ -81,11 +81,14 @@ func getNames(ids TypeIDs) []Name {
 
 	// Make a POST request to fetch the names
 	resp, err := http.Post(lookupNameURL, "application/json", responseBody)
-	if err != nil {
-		log.Fatalf("An Error Occured %v", err)
-	}
 	defer resp.Body.Close()
+	if err != nil {
+		log.Fatal("Failed to lookup names: ", err)
+	}
 	response, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
 	// Prepare to extract the names from the response
 	var names []Name
