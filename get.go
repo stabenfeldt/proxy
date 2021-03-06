@@ -33,9 +33,21 @@ type Order struct {
 	Age          int     `json:"Age"`
 }
 
+// The Name object
+type Name struct {
+	Category      string `json:"category"`
+	InventoryType string `json:"inventory_type"`
+	ID            int    `json:"id"`
+	Name          string `json:"name"`
+}
+
 // Orders contain a list of Orders
 type Orders []Order
+
+// TypeIDs is a list of TypeID
 type TypeIDs []TypeID
+
+// TypeID is an int which represents a type
 type TypeID int
 
 // TypeIDs returns a list of all type_ids found in this list
@@ -48,56 +60,44 @@ func (o Orders) TypeIDs() TypeIDs {
 }
 
 func main() {
-	fmt.Println("main")
 	orders := getOrders()
-	// Extract type_ids
 	typeIDs := orders.TypeIDs()
-	fmt.Println("Printing typeIDs: ", typeIDs)
-	fmt.Println("Printing names: ", getNames(typeIDs))
+	names := getNames(typeIDs)
+
+	// Print all names
+	for _, n := range names {
+		fmt.Println(n.Name)
+	}
+
 }
 
-func getNames(ids TypeIDs) string {
-	//Encode the data
-	//   "[11289, 47930, 2400, 20424, 21857, 22112, 43699, 20353, 11859, 14047]"}
+func getNames(ids TypeIDs) []Name {
+	// Extract the 10 first elements from the list
+	ids = ids[1:10]
+
 	postBody, _ := json.Marshal(ids)
 	responseBody := bytes.NewBuffer(postBody)
-	//Leverage Go's HTTP Post function to make request
+
+	// Make a POST request to fetch the names
 	resp, err := http.Post(lookupNameURL, "application/json", responseBody)
-	//Handle Error
 	if err != nil {
 		log.Fatalf("An Error Occured %v", err)
 	}
 	defer resp.Body.Close()
-	//Read the response body
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		log.Fatalln(err)
+	response, err := ioutil.ReadAll(resp.Body)
+
+	// Prepare to extract the names from the response
+	var names []Name
+	if err := json.Unmarshal(response, &names); err != nil {
+		log.Fatal(err)
 	}
-	sb := string(body)
-	log.Printf(sb)
 
-	return sb
-
+	return names
 }
-
-// func extractKey(orders []Order, keyName string) []string {
-// 	first := orders[0]
-// 	fmt.Println("first: ", first.TypeID)
-// 	return []string{"first"}
-// }
-
-// func (u Users) NameList() []string {
-// 	var list []string
-// 	for _, user := range u {
-// 		list = append(list, user.UserName)
-// 	}
-// 	return list
-// }
 
 func getOrders() Orders {
 	resp, err := http.Get(ordersURL)
 	defer resp.Body.Close()
-
 	if err != nil {
 		log.Fatal("Failed to fetch orders: ", err)
 	}
@@ -107,13 +107,9 @@ func getOrders() Orders {
 		log.Fatalln(err)
 	}
 
-	// fmt.Println(string(response))
-
 	var orders []Order
-
 	if err := json.Unmarshal(response, &orders); err != nil {
 		log.Fatal(err)
 	}
-	// fmt.Printf("Orders: %+v", orders)
 	return orders
 }
