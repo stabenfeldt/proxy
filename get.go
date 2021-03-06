@@ -73,6 +73,7 @@ func main() {
 
 func getNames(ids TypeIDs) []Name {
 	// Extract the 10 first elements from the list
+	// We don´t need the entire list for this POC
 	ids = ids[1:10]
 
 	postBody, _ := json.Marshal(ids)
