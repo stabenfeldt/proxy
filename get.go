@@ -85,6 +85,7 @@ func getNames(ids TypeIDs) []Name {
 	if err != nil {
 		log.Fatal("Failed to lookup names: ", err)
 	}
+
 	response, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalln(err)
