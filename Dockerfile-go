@@ -1,0 +1,11 @@
+FROM golang:1.16.0-alpine3.13
+LABEL maintainer="Martin Stabenfeldt <martin@stabenfeld.net>"
+
+ENV INSTALL_PATH /app
+WORKDIR $INSTALL_PATH
+
+COPY . $INSTALL_PATH
+
+WORKDIR $INSTALL_PATH
+
+CMD ["go", "run", "get.go"]
